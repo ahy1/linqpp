@@ -48,5 +48,13 @@ int main()
 		std::cout << ivseq5.get() << '\n';
 	}
 
+	std::cout << "Take:\n";
+
+	auto ivseq6 = linqpp::make_seq(iv).take(3);
+
+	while (!ivseq6.at_end()) {
+		std::cout << ivseq6.get() << '\n';
+	}
+
 	return 0;
 }

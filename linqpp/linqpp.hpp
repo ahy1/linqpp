@@ -7,6 +7,7 @@
 
 namespace linqpp
 {
+struct out_of_range_exception {};
 
 	template<typename IT> struct it_seq_p {
 		it_seq_p(IT begin, IT end): it(begin), end(end) {}
@@ -65,6 +66,26 @@ namespace linqpp
 		}
 	};
 
+	template<typename S, typename VT> struct take_seq_p {
+		take_seq_p(S &seq, int n): seq(seq), n(n) {}
+
+		using value_type = typename VT;
+
+		S seq;
+		int n;
+
+		bool at_end()
+		{
+			return n<1;
+		}
+		value_type get()
+		{
+			if (--n >= 0) return seq.get();
+			else throw out_of_range_exception();
+		}
+	};
+
+
 	template<typename SP> struct seq {
 		seq(SP sp): sp(sp) {}
 
@@ -80,7 +101,7 @@ namespace linqpp
 		{
 			return sp.get();
 		}
-		seq &skip(int n)
+		seq skip(int n)
 		{
 			while (n>0) {
 				get();
@@ -103,7 +124,10 @@ namespace linqpp
 		{
 			return seq<filter_seq_p<seq, value_type>>(filter_seq_p<seq, value_type>(*this, f));
 		}
-
+		seq<take_seq_p<seq, value_type>> take(int n)
+		{
+			return seq<take_seq_p<seq, value_type>>(take_seq_p<seq, value_type>(*this, n));
+		}
 	};
 
 	template<typename CT> seq<it_seq_p<typename CT::const_iterator>> make_seq(CT &c)
@@ -114,6 +138,11 @@ namespace linqpp
 	template<typename ST, typename EVT> seq<it_seq_p<typename ST::const_iterator>> make_seq_translate(ST &f)
 	{
 		translate_seq_p<ST, EVT> tseq(*this, f);
+		return seq<translate_seq_p<ST, EVT>>(tseq);
+	}
+	template<typename ST, typename EVT> seq<it_seq_p<typename ST::const_iterator>> make_seq_take(int n)
+	{
+		take_seq_p<ST, EVT> tseq(*this, n);
 		return seq<translate_seq_p<ST, EVT>>(tseq);
 	}
 }
