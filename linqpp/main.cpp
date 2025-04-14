@@ -16,17 +16,17 @@ int main()
 		std::cout << ivseq.get() << '\n';
 	}
 
-	std::cout << "Translate:\n";
+	std::cout << "Transform:\n";
 
-	auto ivseq2 = linqpp::make_seq(iv).translate(std::function<int(int)>([](auto r) {return r*2;}));
+	auto ivseq2 = linqpp::make_seq(iv).transform(std::function<int(int)>([](auto r) {return r*2;}));
 
 	while (!ivseq2.at_end()) {
 		std::cout << ivseq2.get() << '\n';
 	}
 
-	std::cout << "Translate with different type:\n";
+	std::cout << "Transform with different type:\n";
 
-	auto ivseq3 = linqpp::make_seq(iv).translate([](auto r) {return r*2.1f;});
+	auto ivseq3 = linqpp::make_seq(iv).transform([](auto r) {return r*2.1f;});
 
 	while (!ivseq3.at_end()) {
 		std::cout << ivseq3.get() << '\n';

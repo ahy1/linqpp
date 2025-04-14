@@ -26,8 +26,8 @@ struct out_of_range_exception {};
 		}
 	};
 
-	template<typename S, typename VT> struct translate_seq_p {
-		translate_seq_p(S &seq, std::function<VT(typename S::value_type)> f): seq(seq), f(f) {}
+	template<typename S, typename VT> struct transform_seq_p {
+		transform_seq_p(S &seq, std::function<VT(typename S::value_type)> f): seq(seq), f(f) {}
 
 		using value_type = typename VT;
 
@@ -115,10 +115,10 @@ struct out_of_range_exception {};
 			return make_ext_seq(*this);
 		}
 
-		template<typename FT> seq<translate_seq_p<seq, typename std::invoke_result<FT, value_type>::type>> translate(FT f)
+		template<typename FT> seq<transform_seq_p<seq, typename std::invoke_result<FT, value_type>::type>> transform(FT f)
 		{
 			using EVT = std::invoke_result<FT, value_type>::type;
-			return seq<translate_seq_p<seq, EVT>>(translate_seq_p<seq, EVT>(*this, f));
+			return seq<transform_seq_p<seq, EVT>>(transform_seq_p<seq, EVT>(*this, f));
 		}
 		template<typename FT> seq<filter_seq_p<seq, value_type>> filter(FT f)
 		{
