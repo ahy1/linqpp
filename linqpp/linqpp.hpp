@@ -134,17 +134,5 @@ struct out_of_range_exception {};
 	{
 		return seq<it_seq_p<typename CT::const_iterator>>(it_seq_p<typename CT::const_iterator>(c.cbegin(), c.cend()));
 	}
-
-	template<typename ST, typename EVT> seq<it_seq_p<typename ST::const_iterator>> make_seq_translate(ST &f)
-	{
-		translate_seq_p<ST, EVT> tseq(*this, f);
-		return seq<translate_seq_p<ST, EVT>>(tseq);
-	}
-
-	template<typename ST, typename EVT> seq<it_seq_p<typename ST::const_iterator>> make_seq_take(int n)
-	{
-		take_seq_p<ST, EVT> tseq(*this, n);
-		return seq<translate_seq_p<ST, EVT>>(tseq);
-	}
 }
 #endif
