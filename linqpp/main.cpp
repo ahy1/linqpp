@@ -56,5 +56,13 @@ int main()
 		std::cout << ivseq6.get() << '\n';
 	}
 
+	std::cout << "Vector out:\n";
+
+	auto ivseq7 = linqpp::make_seq(iv).take(3).vector();
+
+	for (auto v: ivseq7) {
+		std::cout << v << '\n';
+	}
+
 	return 0;
 }

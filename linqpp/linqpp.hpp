@@ -4,6 +4,7 @@
 #include <iterator>
 #include <functional>
 #include <type_traits>
+#include <vector>
 
 namespace linqpp
 {
@@ -108,6 +109,14 @@ struct out_of_range_exception {};
 				--n;
 			}
 			return *this;
+		}
+		std::vector<value_type> vector()
+		{
+			std::vector<value_type> vec;
+			while (!at_end()) {
+				vec.push_back(get());
+			}
+			return vec;
 		}
 
 		template<typename ESP> seq<ESP> ext(std::function<ESP(seq)> make_ext_seq)
