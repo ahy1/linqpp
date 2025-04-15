@@ -64,5 +64,13 @@ int main()
 		std::cout << v << '\n';
 	}
 
+	std::cout << "Map out:\n";
+
+	auto ivseq8 = linqpp::make_seq(iv).take(3).map([](auto r){return r;}, [](auto r){return r*r;});
+
+	for (auto v: ivseq8) {
+		std::cout << v.first << " " << v.second << '\n';
+	}
+
 	return 0;
 }

@@ -5,6 +5,7 @@
 #include <functional>
 #include <type_traits>
 #include <vector>
+#include <map>
 
 namespace linqpp
 {
@@ -117,6 +118,20 @@ struct out_of_range_exception {};
 				vec.push_back(get());
 			}
 			return vec;
+		}
+		template<typename KFT, typename VFT>
+		std::map<typename std::invoke_result<KFT, value_type>::type, typename std::invoke_result<VFT, value_type>::type>
+		map(KFT kf, VFT vf)
+		{
+			using key_type = typename std::invoke_result<KFT, value_type>::type;
+			using value_type = typename std::invoke_result<VFT, value_type>::type;
+
+			std::map<key_type, value_type> map;
+			while (!at_end()) {
+				auto r = get();
+				map[kf(r)] = vf(r);
+			}
+			return map;
 		}
 
 		template<typename ESP> seq<ESP> ext(std::function<ESP(seq)> make_ext_seq)
