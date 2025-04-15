@@ -18,7 +18,7 @@ struct out_of_range_exception {};
 
 		IT it, end;
 
-		bool at_end()
+		bool at_end() const
 		{
 			return it==end;
 		}
@@ -36,7 +36,7 @@ struct out_of_range_exception {};
 		S seq;
 		std::function<VT(typename S::value_type)> f;
 
-		bool at_end()
+		bool at_end() const
 		{
 			return seq.at_end();
 		}
@@ -54,7 +54,7 @@ struct out_of_range_exception {};
 		S seq;
 		std::function<VT(typename S::value_type)> f;
 
-		bool at_end()
+		bool at_end() const
 		{
 			return seq.at_end();
 		}
@@ -76,7 +76,7 @@ struct out_of_range_exception {};
 		S seq;
 		int n;
 
-		bool at_end()
+		bool at_end() const
 		{
 			return n<1;
 		}
@@ -95,7 +95,7 @@ struct out_of_range_exception {};
 
 		SP sp;
 
-		bool at_end()
+		bool at_end() const
 		{
 			return sp.at_end();
 		}
